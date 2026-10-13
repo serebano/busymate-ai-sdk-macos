@@ -1,0 +1,27 @@
+name: SDK checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  sdk-check:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify manifest, build the package, run SDK unit tests, typecheck the AppKit sample
+        run: bash scripts/check-macos.sh
+      - name: Build the real example app (Debug)
+        run: bash example-app/scripts/build.sh
+      - name: Test configuration and backend reply boundaries
+        run: bash example-app/scripts/test-config.sh
+      - name: Run the example app's XCTest target
+        run: xcodebuild -project example-app/BusymateSDKExample.xcodeproj -scheme BusymateSDKExample -destination 'platform=macOS' -derivedDataPath example-app/.derived-data -jobs 2 test
+      - name: Build the example app (Release, ad-hoc signed, hardened runtime)
+        run: CONFIGURATION=Release bash example-app/scripts/build.sh
+      - name: Package the example app
+        run: |
+          cd example-app/.derived-data/Build/Products/Release
+          ditto -c -k --keepParent BusymateSDKExample.app "$GITHUB_WORKSPACE/busymate-sdk-example-macos-1.0.0.zip"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: busymate-sdk-example-macos-1.0.0
+          path: busymate-sdk-example-macos-1.0.0.zip
