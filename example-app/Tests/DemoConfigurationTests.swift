@@ -88,6 +88,9 @@ final class DemoConfigurationTests: XCTestCase {
     }
     #if os(macOS)
     func testRealMintTransportDoesNotFollowAuthenticatedRedirect() async throws {
+        // Inside the sandboxed app host a subprocess cannot run; the host-side `swift test` run covers this.
+        try XCTSkipIf(ProcessInfo.processInfo.environment["APP_SANDBOX_CONTAINER_ID"] != nil,
+                      "loopback fixture needs a subprocess; covered by example-app/scripts/test-config.sh")
         let fixture = URL(fileURLWithPath: #filePath).deletingLastPathComponent().appendingPathComponent("redirect-fixture.py")
         let process = Process()
         let output = Pipe()
