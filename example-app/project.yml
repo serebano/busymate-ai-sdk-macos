@@ -1,0 +1,52 @@
+name: BusymateSDKExample
+options:
+  projectFormat: xcode15_0
+  deploymentTarget:
+    macOS: '12.0'
+packages:
+  BusymateAI:
+    path: ..
+settings:
+  base:
+    SWIFT_VERSION: '5.0'
+    MACOSX_DEPLOYMENT_TARGET: '12.0'
+targets:
+  BusymateSDKExample:
+    type: application
+    platform: macOS
+    sources: [Sources]
+    dependencies:
+      - package: BusymateAI
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example
+        INFOPLIST_FILE: Info.plist
+        GENERATE_INFOPLIST_FILE: NO
+        CODE_SIGN_ENTITLEMENTS: BusymateSDKExample.entitlements
+        CODE_SIGN_IDENTITY: '-'
+        CODE_SIGN_STYLE: Manual
+        DEVELOPMENT_TEAM: ''
+      configs:
+        Release:
+          ENABLE_HARDENED_RUNTIME: YES
+  BusymateSDKExampleTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources: [Tests]
+    dependencies:
+      - target: BusymateSDKExample
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: ai.busymate.sdk.example.tests
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_IDENTITY: '-'
+        CODE_SIGN_STYLE: Manual
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/BusymateSDKExample.app/Contents/MacOS/BusymateSDKExample
+        BUNDLE_LOADER: $(TEST_HOST)
+schemes:
+  BusymateSDKExample:
+    build:
+      targets:
+        BusymateSDKExample: all
+    test:
+      targets: [BusymateSDKExampleTests]
