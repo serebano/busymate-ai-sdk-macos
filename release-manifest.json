@@ -1,17 +1,17 @@
 {
   "sdk": "Busymate AI macos",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "identityWire": {
     "v2": 2,
     "v2Build": "2.0.0"
   },
   "microphoneWire": 1,
   "microphoneAdapter": "1.0.0",
-  "channel": "desktop",
+  "channel": "desktop_sdk",
   "files": {
-    "Sources/BusymateAI/BusymateAI.swift": "f8aa2e65490b13016d49588ebf3c26b9a025007a30244a16361218d594ccf6e4",
+    "Sources/BusymateAI/BusymateAI.swift": "b340b6f7588e6aefaf559f3a361f730b67addd8d1d78c8de3a706a8d1b55fbf2",
     "Sources/BusymateAI/BusymateBridge.swift": "26cae50851a3a2e83b99670107fbda76ef144abecc2a490c9776c01d7693e144",
     "Sources/BusymateAI/BusymateMicrophone.swift": "419630cec81f2bb9ead8ffc0d0db1e4e1aa640a9b35cbc7e622a3325b2b7fdc4",
-    "Sources/BusymateAI/BusymateChat.swift": "a842ef8a2638df463885d84194bfef95810ce9263005315ce8df315ba8c97205"
+    "Sources/BusymateAI/BusymateChat.swift": "f15708fdcac38fc6d00c3259d200843b46e1be1059447158f1e07ea16e6f20cb"
   }
 }

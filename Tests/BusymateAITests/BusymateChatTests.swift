@@ -9,8 +9,8 @@ final class BusymateChatTests: XCTestCase {
     }
 
     func testDefaultGuestURLUsesDesktopChannelAndLocale() {
-        XCTAssertEqual(BusymateAI.guestChatURL().absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop&locale=en")
-        XCTAssertEqual(BusymateAI.guestChatURL(locale: "ru").absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop&locale=ru")
+        XCTAssertEqual(BusymateAI.guestChatURL().absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en")
+        XCTAssertEqual(BusymateAI.guestChatURL(locale: "ru").absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=ru")
     }
 
     func testChatURLMustBeHttpsAndAllowed() throws {
@@ -32,7 +32,7 @@ final class BusymateChatTests: XCTestCase {
         func decide(_ raw: String, main: Bool = true, user: Bool = false) -> BusymateChatController.NavigationDecision {
             chat.decide(url: URL(string: raw)!, mainFrame: main, userActivated: user)
         }
-        XCTAssertEqual(decide("https://busymate.ai/support/busyproxy?channel=desktop"), .allow)
+        XCTAssertEqual(decide("https://busymate.ai/support/busyproxy?channel=desktop_sdk"), .allow)
         XCTAssertEqual(decide("https://BUSYMATE.ai:443/x"), .allow)
         XCTAssertEqual(decide("about:blank"), .allow)
         XCTAssertEqual(decide("https://evil.example/"), .cancel)

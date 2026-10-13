@@ -1,4 +1,4 @@
-# Busymate AI SDK for macOS — 1.0.0
+# Busymate AI SDK for macOS — 1.0.1
 
 Official independent macOS Swift package for Busymate AI hosted chat in a native Mac app: a `WKWebView` on AppKit with a SwiftUI wrapper, the frozen identity bridge v2 and the tap-triggered microphone adapter. Install once in your app; hosted chat receives web updates independently.
 
@@ -8,10 +8,10 @@ In Xcode, File → Add Package Dependencies, use:
 
 `https://github.com/serebano/busymate-ai-sdk-macos.git`
 
-Choose **Exact Version 1.0.0** and add the `BusymateAI` product to your app target. Requires macOS 12+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
+Choose **Exact Version 1.0.1** and add the `BusymateAI` product to your app target. Requires macOS 12+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
 
 ```swift
-.package(url: "https://github.com/serebano/busymate-ai-sdk-macos.git", exact: "1.0.0")
+.package(url: "https://github.com/serebano/busymate-ai-sdk-macos.git", exact: "1.0.1")
 // In your target's dependencies:
 .product(name: "BusymateAI", package: "busymate-ai-sdk-macos")
 ```
@@ -22,7 +22,7 @@ Choose **Exact Version 1.0.0** and add the `BusymateAI` product to your app targ
 
 ```swift
 let chat = try BusymateChatController(
-    chatURL: URL(string: "https://busymate.ai/support/acme?channel=desktop&locale=en")!,
+    chatURL: URL(string: "https://busymate.ai/support/acme?channel=desktop_sdk&locale=en")!,
     bridge: .init(assistant: "acme", origins: ["https://busymate.ai"],
                   account: { Auth.shared.userId },                     // nil = signed out
                   mint: { request in try await Backend.mintBusymate(nonce: request.nonce, aud: request.aud) },
@@ -47,7 +47,7 @@ When the user taps microphone or voice, chat asks the native adapter; macOS micr
 
 ## Chat URL and channel
 
-The default guest chat is `https://busymate.ai/support/busyproxy?channel=desktop&locale=en` (`BusymateAI.guestChatURL()`). The hosted product accepts the channels `hosted_web`, `embed`, `ios`, `android` and `desktop`; a Mac app uses **`desktop`**, which the launch server records as a desktop session. `embed` is not usable for a top-level web view: the launch server requires an embed frame's parent page to be on the tenant's embed allow-list and refuses the launch otherwise. The hosted `desktop` layout is shared with Busymate's own Console app, and `locale` is applied after load rather than at first paint. Your workspace owns hosted voice/history/knowledge/tools/handoff availability; native configuration does not fabricate backend capabilities or authenticate merely from an account ID.
+The default guest chat is `https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en` (`BusymateAI.guestChatURL()`). A Mac app pins **`desktop_sdk`**, the hosted product's channel for third-party desktop apps on the official desktop SDKs: the chat loads as the window's top-level page with no parent frame, uses the normal chat layout and applies `locale` on the first frame, and sessions are labelled "Desktop app (SDK)" in the Console. Do not use `desktop` — it is Busymate's own Console app and brings the Console's title-bar inset and styling — or `embed`, which requires an embed frame's parent page to be on the tenant's embed allow-list and is refused as a top-level web view. Your workspace owns hosted voice/history/knowledge/tools/handoff availability; native configuration does not fabricate backend capabilities or authenticate merely from an account ID. Integration guide: [busymate.ai/docs/guides/macos-sdk](https://busymate.ai/docs/guides/macos-sdk).
 
 ## Run the example app
 
@@ -55,6 +55,6 @@ Open `example-app/BusymateSDKExample.xcodeproj`, select the `BusymateSDKExample`
 
 ## Versions and ownership
 
-Platform distribution 1.0.0 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. The macOS bridge is the AppKit port of the iOS file: the same envelope, operations, errors, events and origin rules, with `platform: "macos"` in `hello`. There is no legacy v1 identity bridge on macOS. The [release manifest](release-manifest.json) pins the source hashes. This repository is canonical for macOS SDK releases. Frozen web/shared contracts remain owned by the hosted product.
+Platform distribution 1.0.1 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. The macOS bridge is the AppKit port of the iOS file: the same envelope, operations, errors, events and origin rules, with `platform: "macos"` in `hello`. There is no legacy v1 identity bridge on macOS. The [release manifest](release-manifest.json) pins the source hashes. This repository is canonical for macOS SDK releases. Frozen web/shared contracts remain owned by the hosted product.
 
 Run `bash scripts/check-macos.sh` on a Mac with Xcode. It verifies the manifest, builds the package, runs the SDK unit tests and typechecks the AppKit sample. It does not certify OS permission dialogs, App Store or notarized distribution, or your backend integration. See the [changelog](CHANGELOG.md) and the [v2 wire contract](CONTRACT-v2.md).
