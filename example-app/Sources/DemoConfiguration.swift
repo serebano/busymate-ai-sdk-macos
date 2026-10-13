@@ -2,8 +2,8 @@ import Foundation
 
 struct DemoConfiguration: Equatable {
     var assistant = "busyproxy"
-    // macOS pins channel=desktop (accepted by the hosted launch); channel=embed needs a listed embed parent page.
-    var chatURL = "https://busymate.ai/support/busyproxy?channel=desktop&locale=en"
+    // macOS pins channel=desktop_sdk (third-party desktop apps, top-level); channel=embed needs a listed embed parent page.
+    var chatURL = "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en"
     var locale = "en"
     var origins = "https://busymate.ai"
     var signedIn = false

@@ -42,7 +42,7 @@ public final class BusymateChatController: NSObject, WKUIDelegate, WKNavigationD
 
     /// - Parameters:
     ///   - chatURL: your tenant's hosted chat URL, e.g.
-    ///     `https://busymate.ai/support/<assistant>?channel=desktop&locale=en`. Its origin must be allowed by `bridge`.
+    ///     `https://busymate.ai/support/<assistant>?channel=desktop_sdk&locale=en`. Its origin must be allowed by `bridge`.
     ///   - bridge: the v2 identity bridge configuration (assistant, origins, account, mint, callbacks).
     ///   - microphone: install the tap-triggered microphone adapter. When false, WebKit media requests are denied.
     ///   - configuration: an optional WKWebViewConfiguration of yours (data store, user scripts, …).

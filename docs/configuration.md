@@ -22,7 +22,7 @@ Takes `webView` and exact `origins`. Install it once before the load, not on eac
 
 | Parameter | Behavior |
 |---|---|
-| `chatURL` | Your tenant's hosted chat URL. It must be HTTPS without credentials, and its origin must be in the bridge's allowed origins, or `init` throws `BusymateChatError.chatURLNotAllowed`. Keep the tenant's query parameters; pin `channel=desktop`. |
+| `chatURL` | Your tenant's hosted chat URL. It must be HTTPS without credentials, and its origin must be in the bridge's allowed origins, or `init` throws `BusymateChatError.chatURLNotAllowed`. Keep the tenant's query parameters; pin `channel=desktop_sdk` (not `desktop`, which is Busymate's own Console app, nor `embed`). |
 | `bridge` | The `BusymateBridge.Config` above. |
 | `microphone` | `true` (default) installs the adapter with the same allowed origins. `false` denies every WebKit media request. |
 | `configuration` | Optional `WKWebViewConfiguration` of yours (website data store, your own user scripts or handlers; do not register `BusymateBridge` or `BusymateMicrophone` yourself). |
