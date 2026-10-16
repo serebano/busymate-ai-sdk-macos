@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2
+
+Release packaging: the microphone adapter source (`BusymateMicrophone.swift` sha256 `419630cec81f2bb9ead8ffc0d0db1e4e1aa640a9b35cbc7e622a3325b2b7fdc4`; adapter 1.0.0, wire 1) is attached to every GitHub release and listed in `SHA256SUMS`; docs link the release ([Download the adapter](docs/microphone.md#download-the-adapter)). `release-manifest.json` lists `adapterAssets` and `scripts/verify-release.py` checks them. No adapter or bridge code change (refs serebano/busymate-ai-src#2156).
+
 ## 1.0.1
 
 The default guest chat and `BusymateAI.channel` move from `channel=desktop` to `channel=desktop_sdk`, the hosted channel for third-party desktop apps (serebano/busymate-ai-src#1849). The chat now loads with the normal layout (no Console title-bar inset) and applies `locale` on the first frame. `desktop` is reserved for Busymate's own Console app. Identity bridge v2 (build 2.0.0) and microphone adapter 1.0.0 are unchanged. Replace any hard-coded `channel=desktop` in your own chat URL with `channel=desktop_sdk`.

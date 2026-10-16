@@ -3,7 +3,7 @@ import Foundation
 /// SDK-level constants for the macOS distribution.
 public enum BusymateAI {
     /// This platform distribution's version (distinct from identity wire 2 / build 2.0.0 and microphone adapter 1.0.0).
-    public static let sdkVersion = "1.0.1"
+    public static let sdkVersion = "1.0.2"
 
     /// The hosted chat channel a macOS app pins: `desktop_sdk`, the hosted
     /// product's channel for third-party desktop apps built on the official

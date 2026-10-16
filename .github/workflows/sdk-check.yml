@@ -20,8 +20,8 @@ jobs:
       - name: Package the example app
         run: |
           cd example-app/.derived-data/Build/Products/Release
-          ditto -c -k --keepParent BusymateSDKExample.app "$GITHUB_WORKSPACE/busymate-sdk-example-macos-1.0.1.zip"
+          ditto -c -k --keepParent BusymateSDKExample.app "$GITHUB_WORKSPACE/busymate-sdk-example-macos-1.0.2.zip"
       - uses: actions/upload-artifact@v4
         with:
-          name: busymate-sdk-example-macos-1.0.1
-          path: busymate-sdk-example-macos-1.0.1.zip
+          name: busymate-sdk-example-macos-1.0.2
+          path: busymate-sdk-example-macos-1.0.2.zip

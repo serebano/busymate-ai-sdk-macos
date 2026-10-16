@@ -1,4 +1,4 @@
-# Busymate AI SDK for macOS — 1.0.1
+# Busymate AI SDK for macOS — 1.0.2
 
 Official independent macOS Swift package for Busymate AI hosted chat in a native Mac app: a `WKWebView` on AppKit with a SwiftUI wrapper, the frozen identity bridge v2 and the tap-triggered microphone adapter. Install once in your app; hosted chat receives web updates independently.
 
@@ -8,10 +8,10 @@ In Xcode, File → Add Package Dependencies, use:
 
 `https://github.com/serebano/busymate-ai-sdk-macos.git`
 
-Choose **Exact Version 1.0.1** and add the `BusymateAI` product to your app target. Requires macOS 12+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
+Choose **Exact Version 1.0.2** and add the `BusymateAI` product to your app target. Requires macOS 12+ and Swift tools 5.9+ (Swift 5 language mode). In a package manifest:
 
 ```swift
-.package(url: "https://github.com/serebano/busymate-ai-sdk-macos.git", exact: "1.0.1")
+.package(url: "https://github.com/serebano/busymate-ai-sdk-macos.git", exact: "1.0.2")
 // In your target's dependencies:
 .product(name: "BusymateAI", package: "busymate-ai-sdk-macos")
 ```
@@ -53,8 +53,24 @@ The default guest chat is `https://busymate.ai/support/busyproxy?channel=desktop
 
 Open `example-app/BusymateSDKExample.xcodeproj`, select the `BusymateSDKExample` scheme and **My Mac**, and run. It consumes this SDK as a local Swift package and has a settings pane (chat URL, locale, origins, guest or identified mint callback, microphone on/off, callbacks) and an events log. See the [example guide](example-app/README.md). Build with `bash example-app/scripts/build.sh`; test with `bash example-app/scripts/test-config.sh`.
 
+## Download the adapter
+
+`BusymateMicrophone.swift` (microphone adapter 1.0.0, wire 1) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
+
+- Latest release: https://github.com/serebano/busymate-ai-sdk-macos/releases/latest/download/BusymateMicrophone.swift
+- Pinned, SDK 1.0.2: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/BusymateMicrophone.swift
+- Checksums: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+
+The SDK installs the adapter itself; the standalone file is for audit and vendoring.
+
+This repository and its releases are the only source of the adapter. busymate.ai no longer publishes adapter copies; its legacy `https://busymate.ai/sdk/microphone/1.0.0/` files stay frozen for existing integrations.
+
+## Release process
+
+Every release attaches each `adapterAssets` file from [release-manifest.json](release-manifest.json) under its basename, plus `SHA256SUMS` covering every asset. `python3 scripts/verify-release.py` checks that each adapter asset is pinned in `files` with a matching sha256.
+
 ## Versions and ownership
 
-Platform distribution 1.0.1 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. The macOS bridge is the AppKit port of the iOS file: the same envelope, operations, errors, events and origin rules, with `platform: "macos"` in `hello`. There is no legacy v1 identity bridge on macOS. The [release manifest](release-manifest.json) pins the source hashes. This repository is canonical for macOS SDK releases. Frozen web/shared contracts remain owned by the hosted product.
+Platform distribution 1.0.2 is distinct from identity wire 2/build 2.0.0 and microphone wire 1/adapter 1.0.0. The macOS bridge is the AppKit port of the iOS file: the same envelope, operations, errors, events and origin rules, with `platform: "macos"` in `hello`. There is no legacy v1 identity bridge on macOS. The [release manifest](release-manifest.json) pins the source hashes. This repository is canonical for macOS SDK releases. Frozen web/shared contracts remain owned by the hosted product.
 
 Run `bash scripts/check-macos.sh` on a Mac with Xcode. It verifies the manifest, builds the package, runs the SDK unit tests and typechecks the AppKit sample. It does not certify OS permission dialogs, App Store or notarized distribution, or your backend integration. See the [changelog](CHANGELOG.md) and the [v2 wire contract](CONTRACT-v2.md).
