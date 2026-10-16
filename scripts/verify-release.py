@@ -6,7 +6,7 @@ for name, expected in m['files'].items():
     actual = hashlib.sha256((root / name).read_bytes()).hexdigest()
     assert actual == expected, f"Frozen source changed: {name}"
     print(f"verified {name} {actual}")
-assert m['version'] == '1.0.1'
+assert m['version'] == '1.0.2'
 assert m['channel'] == 'desktop_sdk'
 assert f'channel = "{m["channel"]}"' in (root / 'Sources/BusymateAI/BusymateAI.swift').read_text()
 assert f'sdkVersion = "{m["version"]}"' in (root / 'Sources/BusymateAI/BusymateAI.swift').read_text()
@@ -28,3 +28,13 @@ for key in ('com.apple.security.app-sandbox', 'com.apple.security.network.client
 info = plistlib.loads((root / 'example-app/Info.plist').read_bytes())
 assert info.get('NSMicrophoneUsageDescription'), 'missing NSMicrophoneUsageDescription'
 print('verified example entitlements and NSMicrophoneUsageDescription')
+
+# Every release attaches each adapter source file under its basename, listed in SHA256SUMS.
+_assets = m['adapterAssets']
+assert _assets, 'adapterAssets must list the microphone adapter source file(s)'
+assert len({Path(a).name for a in _assets}) == len(_assets), 'adapter asset basenames must be unique'
+for _a in _assets:
+    assert _a in m['files'], f'adapter asset {_a} is not pinned in files'
+    _sha = hashlib.sha256((root / _a).read_bytes()).hexdigest()
+    assert _sha == m['files'][_a], f'adapter asset {_a} changed'
+    print(f'verified adapter asset {Path(_a).name} {_sha}')

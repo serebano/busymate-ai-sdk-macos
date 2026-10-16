@@ -77,6 +77,18 @@ A malformed or untrusted request is rejected with an error and never prompts. Do
 
 The chat waits before `getUserMedia` or voice session creation. A native refusal, invalid reply or 60-second timeout shows the blocked notice. **Try again** asks the app again; concurrent requests share one pending ask. Each later activation rechecks permission, including a grant revoked in System Settings. Cancel dictation with another microphone tap, or leave voice mode; a late permission result cannot start capture after cancel or unmount. Cancelling chat does not dismiss the OS prompt or undo an OS grant.
 
+## Download the adapter
+
+`BusymateMicrophone.swift` (microphone adapter 1.0.0, wire 1) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
+
+- Latest release: https://github.com/serebano/busymate-ai-sdk-macos/releases/latest/download/BusymateMicrophone.swift
+- Pinned, SDK 1.0.2: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/BusymateMicrophone.swift
+- Checksums: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+
+The SDK installs the adapter itself; the standalone file is for audit and vendoring.
+
+This repository and its releases are the only source of the adapter. busymate.ai no longer publishes adapter copies; its legacy `https://busymate.ai/sdk/microphone/1.0.0/` files stay frozen for existing integrations.
+
 ## Troubleshooting
 
 | Symptom | Check |
