@@ -30,8 +30,11 @@ jobs:
         run: bash example-app/scripts/build.sh
       - name: Test configuration and backend reply boundaries
         run: bash example-app/scripts/test-config.sh
-      - name: Run the example app's XCTest target
-        run: xcodebuild -project example-app/BusymateSDKExample.xcodeproj -scheme BusymateSDKExample -destination 'platform=macOS' -derivedDataPath example-app/.derived-data -jobs 2 test
+      # The Mac runner's sandbox denies LaunchServices and the window server (it must never drive the owner's GUI
+      # session), so the app-hosted XCTest bundle cannot be launched there: it is compiled here, and the example's
+      # configuration logic is executed by test-config.sh above. Run `xcodebuild ... test` on a desktop Mac before a release.
+      - name: Build the example app's XCTest target (execution needs a GUI session)
+        run: xcodebuild -project example-app/BusymateSDKExample.xcodeproj -scheme BusymateSDKExample -destination 'platform=macOS' -derivedDataPath example-app/.derived-data -jobs 2 build-for-testing
       - name: Build the example app (Release, ad-hoc signed, hardened runtime)
         run: CONFIGURATION=Release bash example-app/scripts/build.sh
       - name: Package the example app
