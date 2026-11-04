@@ -4,9 +4,13 @@ permissions:
   contents: read
 jobs:
   sdk-check:
-    runs-on: macos-15
+    # The Mac runner (bm-mac-busymate-ai-sdk-*, sandboxed launchd agent, Xcode 26); never GitHub-hosted
+    # (owner order 2026-11-04).
+    runs-on: [self-hosted, macOS, bm-mac]
     steps:
       - uses: actions/checkout@v4
+      - name: No GitHub-hosted runners (runs-on lint)
+        run: python3 .github/runs-on-lint.py
       - name: Verify manifest, build the package, run SDK unit tests, typecheck the AppKit sample
         run: bash scripts/check-macos.sh
       - name: Build the real example app (Debug)
