@@ -82,8 +82,8 @@ The chat waits before `getUserMedia` or voice session creation. A native refusal
 `BusymateMicrophone.swift` (microphone adapter 1.0.0, wire 1) ships in this SDK and is attached to every GitHub release, with `SHA256SUMS`:
 
 - Latest release: https://github.com/serebano/busymate-ai-sdk-macos/releases/latest/download/BusymateMicrophone.swift
-- Pinned, SDK 1.0.2: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/BusymateMicrophone.swift
-- Checksums: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.2/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
+- Pinned, SDK 1.0.4: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.4/BusymateMicrophone.swift
+- Checksums: https://github.com/serebano/busymate-ai-sdk-macos/releases/download/1.0.4/SHA256SUMS (`shasum -a 256 -c SHA256SUMS --ignore-missing`)
 
 The SDK installs the adapter itself; the standalone file is for audit and vendoring.
 

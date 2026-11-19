@@ -9,13 +9,13 @@ final class DemoConfigurationTests: XCTestCase {
     func testDefaultLoadsRealGuestChatAndExactOrigin() throws {
         let config = DemoConfiguration()
         let valid = try config.validated()
-        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en")
+        XCTAssertEqual(valid.chatURL.absoluteString, "https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk&locale=en")
         XCTAssertEqual(valid.origins, ["https://busymate.ai"])
         XCTAssertFalse(config.signedIn)
         XCTAssertNil(valid.backendURL)
     }
     func testInsecureChatAndEmbeddedCredentialsAreRefused() {
-        for url in ["http://busymate.ai/support/busyproxy", "https://user:password@busymate.ai/support/busyproxy"] {
+        for url in ["http://busymate.ai/chat/w/busyproxy", "https://user:password@busymate.ai/chat/w/busyproxy"] {
             var config = DemoConfiguration(); config.chatURL = url
             XCTAssertThrowsError(try config.validated())
         }
@@ -28,9 +28,9 @@ final class DemoConfigurationTests: XCTestCase {
     }
     func testLocaleReplacesOnlyTheLocaleParameter() throws {
         var config = DemoConfiguration(); config.locale = "pt-BR"
-        XCTAssertEqual(try config.validated().chatURL.absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=pt-BR")
+        XCTAssertEqual(try config.validated().chatURL.absoluteString, "https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk&locale=pt-BR")
         config.locale = ""
-        XCTAssertEqual(try config.validated().chatURL.absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en")
+        XCTAssertEqual(try config.validated().chatURL.absoluteString, "https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk&locale=en")
         for bad in ["en&channel=ios", "../x", "english-language-tag"] {
             config.locale = bad
             XCTAssertThrowsError(try config.validated(), bad)

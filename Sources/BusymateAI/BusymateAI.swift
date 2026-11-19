@@ -3,7 +3,7 @@ import Foundation
 /// SDK-level constants for the macOS distribution.
 public enum BusymateAI {
     /// This platform distribution's version (distinct from identity wire 2 / build 2.0.0 and microphone adapter 1.0.0).
-    public static let sdkVersion = "1.0.2"
+    public static let sdkVersion = "1.0.4"
 
     /// The hosted chat channel a macOS app pins: `desktop_sdk`, the hosted
     /// product's channel for third-party desktop apps built on the official
@@ -18,12 +18,12 @@ public enum BusymateAI {
     /// The public guest support assistant used by the example app.
     public static let guestAssistant = "busyproxy"
 
-    /// `https://busymate.ai/support/<assistant>?channel=desktop_sdk&locale=<locale>`.
+    /// `https://busymate.ai/chat/w/<assistant>?channel=desktop_sdk&locale=<locale>`.
     public static func guestChatURL(assistant: String = guestAssistant, locale: String = "en") -> URL {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "busymate.ai"
-        components.path = "/support/\(assistant)"
+        components.path = "/chat/w/\(assistant)"
         components.queryItems = [URLQueryItem(name: "channel", value: channel), URLQueryItem(name: "locale", value: locale)]
         return components.url!
     }
