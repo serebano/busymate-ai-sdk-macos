@@ -9,14 +9,14 @@ final class BusymateChatTests: XCTestCase {
     }
 
     func testDefaultGuestURLUsesDesktopChannelAndLocale() {
-        XCTAssertEqual(BusymateAI.guestChatURL().absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=en")
-        XCTAssertEqual(BusymateAI.guestChatURL(locale: "ru").absoluteString, "https://busymate.ai/support/busyproxy?channel=desktop_sdk&locale=ru")
+        XCTAssertEqual(BusymateAI.guestChatURL().absoluteString, "https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk&locale=en")
+        XCTAssertEqual(BusymateAI.guestChatURL(locale: "ru").absoluteString, "https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk&locale=ru")
     }
 
     func testChatURLMustBeHttpsAndAllowed() throws {
         XCTAssertNoThrow(try BusymateChatController(chatURL: BusymateAI.guestChatURL(), bridge: config()))
         XCTAssertNoThrow(try BusymateChatController(chatURL: URL(string: "https://busyproxy.busymate.ai/")!, bridge: config(origins: [])))
-        for raw in ["http://busymate.ai/support/busyproxy", "https://user:pw@busymate.ai/support/busyproxy",
+        for raw in ["http://busymate.ai/chat/w/busyproxy", "https://user:pw@busymate.ai/chat/w/busyproxy",
                     "https://other.example/support"] {
             XCTAssertThrowsError(try BusymateChatController(chatURL: URL(string: raw)!, bridge: config())) { error in
                 XCTAssertEqual(error as? BusymateChatError, .chatURLNotAllowed)
@@ -32,7 +32,7 @@ final class BusymateChatTests: XCTestCase {
         func decide(_ raw: String, main: Bool = true, user: Bool = false) -> BusymateChatController.NavigationDecision {
             chat.decide(url: URL(string: raw)!, mainFrame: main, userActivated: user)
         }
-        XCTAssertEqual(decide("https://busymate.ai/support/busyproxy?channel=desktop_sdk"), .allow)
+        XCTAssertEqual(decide("https://busymate.ai/chat/w/busyproxy?channel=desktop_sdk"), .allow)
         XCTAssertEqual(decide("https://BUSYMATE.ai:443/x"), .allow)
         XCTAssertEqual(decide("about:blank"), .allow)
         XCTAssertEqual(decide("https://evil.example/"), .cancel)

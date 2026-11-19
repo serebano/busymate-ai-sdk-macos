@@ -5,7 +5,7 @@
 | Setting | Behavior |
 |---|---|
 | `assistant` | Required assistant slug; adds exactly `https://<assistant>.busymate.ai` to the allowed origins. Get your real assistant URL from Busymate; a marketing page is not a chat URL. |
-| `origins` | Extra exact HTTPS origins, for example `https://busymate.ai` for a `/support/<assistant>` URL or your mapped support host. No wildcards, paths or `http:`; invalid entries are ignored. |
+| `origins` | Extra exact HTTPS origins, for example `https://busymate.ai` for a `/chat/w/<assistant>` URL or your mapped support host. No wildcards, paths or `http:`; invalid entries are ignored. |
 | `account` | Closure returning the current account ID or nil, read when state or mint is requested. |
 | `mint` | Required authenticated-backend callback that returns a fresh token/nonce for every request, never a cached assertion. The bridge answers `timeout` after 15 s. |
 | `onAction` | Optional fixed app-action handler; return true only when handled. Names in use: `close`, `ready` (informational). |

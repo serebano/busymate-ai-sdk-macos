@@ -6,7 +6,7 @@ for name, expected in m['files'].items():
     actual = hashlib.sha256((root / name).read_bytes()).hexdigest()
     assert actual == expected, f"Frozen source changed: {name}"
     print(f"verified {name} {actual}")
-assert m['version'] == '1.0.2'
+assert m['version'] == '1.0.4'
 assert m['channel'] == 'desktop_sdk'
 assert f'channel = "{m["channel"]}"' in (root / 'Sources/BusymateAI/BusymateAI.swift').read_text()
 assert f'sdkVersion = "{m["version"]}"' in (root / 'Sources/BusymateAI/BusymateAI.swift').read_text()
